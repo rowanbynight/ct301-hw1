@@ -1,0 +1,13 @@
+./calculator
+42 * 5 !exp 210
+42 / 5 !exp 8
+42 + 5 !exp 47
+42 - 5 !exp 37
+42 % 5 !exp 2
+13.5 * 2 !exp 27.000000
+27.2 / 2 !exp 13.600000
+10.3 + 9.7 !exp 20.000000
+20.4 - 8.2 !exp 12.200000
+14.5 % 5 !exp Invalid operation: % not supported for double math
+- 94 2 !exp Operand invalid: - is not a number
+33 + !exp Invalid input: unsupported number of arguments passed !exit-code 3
