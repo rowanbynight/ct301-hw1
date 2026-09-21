@@ -6,11 +6,12 @@
 using namespace std;
 
 
+// Partially adapted from code from https://www.geeksforgeeks.org/cpp/string-find-in-cpp/
 bool token_is_int(string token) {
     try {
+        [[maybe_unused]]
         int as_int = stoi(token);
-        double as_double = stod(token);
-        return (static_cast<double>(as_int) == as_double);
+        return token.find('.') == string::npos;
     }
     catch (invalid_argument& e) {
         return false;
