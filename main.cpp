@@ -1,3 +1,4 @@
+#include "element.h"
 #include <iostream>
 #include <string>
 #include <stdbool.h>
@@ -211,8 +212,43 @@ int run_file_mode(string filename) {
     return 0;
 }
 
+int run_tests() {
+    Element newElement(4.5);
+    cout << newElement.DoubleValue() << endl;   // 4.5
+    cout << newElement.Value() << endl;         // 4.5
+    cout << newElement.IntValue() << endl;      // 4
+    newElement.ChangeType();
+    cout << newElement.Value() << endl;         // 4
+    newElement.ChangeType(false);
+    cout << newElement.Value() << endl;         // 4
+    newElement.ChangeType(true);                
+    cout << newElement.Value() << endl;         // 4.5
+    newElement.Value(5);
+    cout << newElement.DoubleValue() << endl;   // 5
+    cout << newElement.Value() << endl;         // 5
+    cout << newElement.IntValue() << endl;      // 5
+    cout << (Element(4) + Element(5)).Value() << endl;          // 9
+    cout << (Element(4) + Element(5)).IsDouble() << endl;       // 0
+    cout << (Element(4) + Element(5.5)).Value() << endl;        // 9.5
+    cout << (Element(4) + Element(5.5)).IsDouble() << endl;     // 1
+    cout << (Element(3.5) + Element(5.5)).Value() << endl;      // 9
+    cout << (Element(3.5) + Element(5.5)).IsDouble() << endl;   // 1
+    cout << (Element(43) % Element(5)).Value() << endl;         // 3
+    try {
+        cout << (Element(43.5) % Element(5)).Value() << endl;
+    }
+    catch (invalid_argument& e) {
+        cerr << e.what() << endl;                               // Error
+    }
+    return 0;
+}
+
+bool test = true;
 
 int main(int argc, char** argv) {
+    if (test) {
+        return run_tests();
+    }
     if (argc == 1) {
         return run_usage_mode();
     }

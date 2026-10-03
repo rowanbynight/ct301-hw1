@@ -8,12 +8,13 @@ GPPFlags = $(REQUIRED) -std=c++20
 Debug = -g
 
 # source and output names
-HWNUM = HW1
+HWNUM = HW2
 
 # Rename this to the name of your main file
-SRC = main.cpp
-# Currently Unused Utility. You will add your own headerfiles as they become relevant
-# HEADER = 
+SRC = main.cpp element.cpp
+MAIN = main.cpp
+HEADER =  element.h
+OBJ = element.o
 
 #Update this with your first and last name
 TARNAME = rowan_townsend
@@ -24,8 +25,14 @@ TARGET = calculator
 .DEFAULT_GOAL := $(Target)
 
 # compile
-$(TARGET): $(SRC)
-	$(GPP) $(GPPFlags) $(SRC) -o $(TARGET) 
+$(TARGET): $(HWNUM).a
+	$(GPP) $(GPPFlags) -o $(TARGET) $(MAIN) $<
+
+%.o: %.cpp $(HEADER)
+	$(GPP) $(GPPFlags) -c $< -o $@
+
+$(HWNUM).a: $(OBJ)
+	ar -rcs $(HWNUM).a $^
 
 # clean
 # Running make clean should clean up any unnecessary components
@@ -39,6 +46,6 @@ debug: $(SRC)
 	@echo "Compiled Debug"
 
 package:
-	tar -c Makefile $(SRC) -f $(HWNUM)_$(TARNAME).tar
+#	tar -c Makefile $(SRC) -f $(HWNUM)_$(TARNAME).tar
 # 	Uncomment the Below line when you add headerfiles and comment out the above line
-# 	tar -c Makefile $(SRC) $(HEADER) -f $(HWNUM)_$(TARNAME).tar 
+	tar -c Makefile $(SRC) $(HEADER) -f $(HWNUM)_$(TARNAME).tar 
