@@ -116,7 +116,7 @@ int run_terminal_mode(char** argv) {
     }
     try {
         validate_operator_token(op);
-        cout << (calculate(Element(left), Element(right), op)).Value() << endl;
+        cout << calculate(Element(left), Element(right), op) << endl;
     }
     catch (invalid_argument& e) {
         cerr << e.what() << endl;
@@ -150,10 +150,10 @@ int run_file_mode(string filename) {
             validate_operand_token(a);
             validate_operand_token(b);
             validate_operator_token(op);
-            cout << (calculate(Element(a), Element(b), op)).Value() << endl;
+            cout << calculate(Element(a), Element(b), op) << endl;
         }
         catch (exception& e) {
-            cout << "Error occured while calculating line " << i << endl;
+            cerr << "Error occured while calculating line " << i << endl;
             return i + 2;
         }
         i++;

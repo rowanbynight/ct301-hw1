@@ -40,6 +40,7 @@ class Element {
         Element operator%(Element const &right);
         bool operator==(Element const &right) const;
         bool operator!=(Element const &right) const;
+        friend std::ostream &operator<<(std::ostream &out, const Element &element);
 };
 
 #endif

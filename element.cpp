@@ -110,3 +110,8 @@ bool Element::operator==(Element const &right) const {
 bool Element::operator!=(Element const &right) const {
     return this->Value() != right.Value();
 }
+
+// Adapted from https://www.geeksforgeeks.org/cpp/overloading-stream-insertion-operators-c/
+std::ostream &operator<<(std::ostream &out, const Element &element) {
+    return out << element.Value();
+}
