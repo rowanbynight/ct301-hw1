@@ -45,7 +45,5 @@ debug: $(SRC)
 	$(GPP) $(GPPFlags) ($SRC) $(Debug) -o $(TARGET)
 	@echo "Compiled Debug"
 
-package:
-#	tar -c Makefile $(SRC) -f $(HWNUM)_$(TARNAME).tar
-# 	Uncomment the Below line when you add headerfiles and comment out the above line
+package: main.cpp
 	tar -c Makefile $(SRC) $(HEADER) -f $(HWNUM)_$(TARNAME).tar 

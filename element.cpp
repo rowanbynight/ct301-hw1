@@ -7,6 +7,28 @@
 #include <fstream>
 
 
+bool Element::TokenIsDouble(std::string const token) {
+        try {
+            [[maybe_unused]]
+            int as_int = stoi(token);
+            return token.find('.') != std::string::npos;
+        }
+        catch (std::invalid_argument& e) {
+            return true;
+        }
+    }
+
+Element::Element(const std::string& newVal) {
+    // Partially adapted from code from https://www.geeksforgeeks.org/cpp/string-find-in-cpp/
+    this->isDouble = this->TokenIsDouble(newVal);
+    if (this->isDouble) {
+        this->Value(std::stod(newVal));
+    }
+    else {
+        this->Value(std::stoi(newVal));
+    }
+}
+
 double Element::Value() const {
     if (isDouble) {
         return this->DoubleValue();
@@ -62,6 +84,9 @@ Element Element::operator*(Element const &right) {
 }
 
 Element Element::operator/(Element const &right) {
+    if (right == 0) {
+        throw std::domain_error("Domain error: cannot divide by zero");
+    }
     if (this->isDouble || right.isDouble) {
         return Element(this->DoubleValue() / right.DoubleValue());
     }
@@ -70,7 +95,18 @@ Element Element::operator/(Element const &right) {
 
 Element Element::operator%(Element const &right) {
     if (this->isDouble || right.isDouble) {
-        throw std::invalid_argument("Math error: Cannot perform modulo arithmetic on non-integers");
+        throw std::domain_error("Domain error: Cannot perform modulo arithmetic on non-integers");
+    }
+    if (right == 0) {
+        throw std::domain_error("Domain error: cannot perform modulo with respect to zero");
     }
     return Element(this->IntValue() % right.IntValue());
+}
+
+bool Element::operator==(Element const &right) const {
+    return this->Value() == right.Value();
+}
+
+bool Element::operator!=(Element const &right) const {
+    return this->Value() != right.Value();
 }
