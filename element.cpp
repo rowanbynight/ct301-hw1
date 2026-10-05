@@ -62,47 +62,6 @@ void Element::Value(double newVal) {
     this->value = newVal;
 }
 
-Element Element::operator+(Element const &right) {
-    if (this->isDouble || right.isDouble) {
-        return Element(this->DoubleValue() + right.DoubleValue());
-    }
-    return Element(this->IntValue() + right.IntValue());
-}
-
-Element Element::operator-(Element const &right) {
-    if (this->isDouble || right.isDouble) {
-        return Element(this->DoubleValue() - right.DoubleValue());
-    }
-    return Element(this->IntValue() - right.IntValue());
-}
-
-Element Element::operator*(Element const &right) {
-    if (this->isDouble || right.isDouble) {
-        return Element(this->DoubleValue() * right.DoubleValue());
-    }
-    return Element(this->IntValue() * right.IntValue());
-}
-
-Element Element::operator/(Element const &right) {
-    if (right == 0) {
-        throw std::domain_error("Domain error: cannot divide by zero");
-    }
-    if (this->isDouble || right.isDouble) {
-        return Element(this->DoubleValue() / right.DoubleValue());
-    }
-    return Element(this->IntValue() / right.IntValue());
-}
-
-Element Element::operator%(Element const &right) {
-    if (this->isDouble || right.isDouble) {
-        throw std::domain_error("Domain error: Cannot perform modulo arithmetic on non-integers");
-    }
-    if (right == 0) {
-        throw std::domain_error("Domain error: cannot perform modulo with respect to zero");
-    }
-    return Element(this->IntValue() % right.IntValue());
-}
-
 bool Element::operator==(Element const &right) const {
     return this->Value() == right.Value();
 }
@@ -114,4 +73,50 @@ bool Element::operator!=(Element const &right) const {
 // Adapted from https://www.geeksforgeeks.org/cpp/overloading-stream-insertion-operators-c/
 std::ostream &operator<<(std::ostream &out, const Element &element) {
     return out << element.Value();
+}
+
+Element operator+(const Element &left, const Element &right) {
+    if (left.IsDouble() || right.IsDouble()) {
+        return Element(left.Value() + right.Value());
+    }
+    else {
+        return Element(left.IntValue() + right.IntValue());
+    }
+}
+
+Element operator-(const Element &left, const Element &right) {
+    if (left.IsDouble() || right.IsDouble()) {
+        return Element(left.Value() - right.Value());
+    }
+    else {
+        return Element(left.IntValue() - right.IntValue());
+    }
+}
+
+Element operator*(const Element &left, const Element &right) {
+    if (left.IsDouble() || right.IsDouble()) {
+        return Element(left.Value() * right.Value());
+    }
+    else {
+        return Element(left.IntValue() * right.IntValue());
+    }
+}
+
+Element operator/(const Element &left, const Element &right) {
+    if (left.IsDouble() || right.IsDouble()) {
+        return Element(left.Value() / right.Value());
+    }
+    else {
+        return Element(left.IntValue() / right.IntValue());
+    }
+}
+
+Element operator%(const Element &left, const Element &right) {
+    if (left.isDouble || right.isDouble) {
+        throw std::domain_error("Domain error: Cannot perform modulo arithmetic on non-integers");
+    }
+    if (right == 0) {
+        throw std::domain_error("Domain error: cannot perform modulo with respect to zero");
+    }
+    return Element(left.IntValue() % right.IntValue());
 }

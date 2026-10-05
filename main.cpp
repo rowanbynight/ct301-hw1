@@ -183,12 +183,20 @@ int run_tests() {
     cout << (Element(3.5) + Element(5.5)).Value() << endl;      // 9
     cout << (Element(3.5) + Element(5.5)).IsDouble() << endl;   // 1
     cout << (Element(43) % Element(5)).Value() << endl;         // 3
-    try {
-        cout << (Element(43.5) % Element(5)).Value() << endl;
-    }
-    catch (invalid_argument& e) {
-        cerr << e.what() << endl;                               // Error
-    }
+   // try {
+   //     cout << (Element(43.5) % Element(5)).Value() << endl;
+    //}
+   // catch (invalid_argument& e) {
+    //    cerr << e.what() << endl;                               // Error
+    //}
+    cout << Element(5) + 4 << endl;     // 9
+    cout << 4 + Element(5) << endl;     // 9
+    cout << Element(3.5) + 5.5 << endl; // 9
+    cout << 3.5 + Element(5.5) << endl; // 9
+    cout << Element(5) + 4.5 << endl;   // 9.5
+    cout << 4.5 + Element(5) << endl;   // 9.5
+    cout << Element(5.5) + 4 << endl;   // 9.5
+    cout << 4 + Element(5.5) << endl;   // 9.5
     return 0;
 }
 

@@ -33,14 +33,14 @@ class Element {
         void ChangeType(bool shouldBeDouble);
         void Value(double newVal);
 
-        Element operator+(Element const &right);
-        Element operator-(Element const &right);
-        Element operator*(Element const &right);
-        Element operator/(Element const &right);
-        Element operator%(Element const &right);
         bool operator==(Element const &right) const;
         bool operator!=(Element const &right) const;
         friend std::ostream &operator<<(std::ostream &out, const Element &element);
+        friend Element operator+(const Element &left, const Element &right);
+        friend Element operator-(const Element &left, const Element &right);
+        friend Element operator*(const Element &left, const Element &right);
+        friend Element operator/(const Element &left, const Element &right);
+        friend Element operator%(const Element &left, const Element &right);
 };
 
 #endif
