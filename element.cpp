@@ -103,6 +103,9 @@ Element operator*(const Element &left, const Element &right) {
 }
 
 Element operator/(const Element &left, const Element &right) {
+    if (right == 0) {
+        throw std::domain_error("Domain error: cannot divide by zero");
+    }
     if (left.IsDouble() || right.IsDouble()) {
         return Element(left.Value() / right.Value());
     }
