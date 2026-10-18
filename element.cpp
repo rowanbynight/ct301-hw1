@@ -1,4 +1,5 @@
 #include "element.h"
+#include "exceptions.h"
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -104,7 +105,7 @@ Element operator*(const Element &left, const Element &right) {
 
 Element operator/(const Element &left, const Element &right) {
     if (right == 0) {
-        throw std::domain_error("Domain error: cannot divide by zero");
+        throw DivideByZeroError("Cannot divide by zero");
     }
     if (left.IsDouble() || right.IsDouble()) {
         return Element(left.Value() / right.Value());
@@ -116,10 +117,10 @@ Element operator/(const Element &left, const Element &right) {
 
 Element operator%(const Element &left, const Element &right) {
     if (left.isDouble || right.isDouble) {
-        throw std::domain_error("Domain error: Cannot perform modulo arithmetic on non-integers");
+        throw ModuloByDoubleError("Cannot perform modulo arithmetic on non-integers");
     }
     if (right == 0) {
-        throw std::domain_error("Domain error: cannot perform modulo with respect to zero");
+        throw DivideByZeroError("Cannot perform modulo with respect to zero");
     }
     return Element(left.IntValue() % right.IntValue());
 }

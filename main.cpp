@@ -1,4 +1,5 @@
 #include "element.h"
+#include "exceptions.h"
 #include <iostream>
 #include <string>
 #include <stdbool.h>
@@ -13,7 +14,7 @@ bool token_is_numeric(string token) {
         stod(token);
         return true;
     }
-    catch (invalid_argument& e) {
+    catch (invalid_argument &e) {
         return false;
     }
 }
@@ -58,15 +59,15 @@ void validate_operand_token(string token) {
     if (token_is_numeric(token)) {
         return;
     }
-    throw invalid_argument("Operand invalid: " + token + " is not a number");
+    throw InvalidElement("Operand invalid: " + token + " is not a number");
 }
 
 void validate_operator_token(string token) {
     if (token.size() != 1) {
-        throw invalid_argument("Operator invalid: " + token + " must be a single character");
+        throw InvalidOperator("Operator invalid: " + token + " must be a single character");
     }
     if (!token_is_operator(token)) {
-        throw invalid_argument("Operator invalid: " + token + " does not match any valid operators");
+        throw InvalidOperator("Operator invalid: " + token + " does not match any valid operators");
     }
 }
 
@@ -109,20 +110,18 @@ int run_terminal_mode(char** argv) {
     try {
         validate_operand_token(left);
         validate_operand_token(right);
-    }
-    catch (invalid_argument& e) {
-        cerr << e.what() << endl;
-        return 3;
-    }
-    try {
         validate_operator_token(op);
         cout << calculate(Element(left), Element(right), op) << endl;
     }
-    catch (invalid_argument& e) {
+    catch (InvalidElement &e) {
+        cerr << e.what() << endl;
+        return 3;
+    }
+    catch (InvalidOperator &e) {
         cerr << e.what() << endl;
         return 4;
     }
-    catch (domain_error& e) {
+    catch (domain_error &e) {
         cerr << e.what() << endl;
         return 5;
     }
@@ -152,7 +151,7 @@ int run_file_mode(string filename) {
             validate_operator_token(op);
             cout << calculate(Element(a), Element(b), op) << endl;
         }
-        catch (exception& e) {
+        catch (exception &e) {
             cerr << "Error occured while calculating line " << i << endl;
             return i + 2;
         }
@@ -183,12 +182,6 @@ int run_tests() {
     cout << (Element(3.5) + Element(5.5)).Value() << endl;      // 9
     cout << (Element(3.5) + Element(5.5)).IsDouble() << endl;   // 1
     cout << (Element(43) % Element(5)).Value() << endl;         // 3
-   // try {
-   //     cout << (Element(43.5) % Element(5)).Value() << endl;
-    //}
-   // catch (invalid_argument& e) {
-    //    cerr << e.what() << endl;                               // Error
-    //}
     cout << Element(5) + 4 << endl;     // 9
     cout << 4 + Element(5) << endl;     // 9
     cout << Element(3.5) + 5.5 << endl; // 9
