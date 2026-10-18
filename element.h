@@ -2,8 +2,10 @@
 #include <ostream>
 #include <string>
 
+
 #ifndef ELEMENT_H
 #define ELEMENT_H
+
 
 class Element {
     bool isDouble = true;
@@ -25,13 +27,13 @@ class Element {
 
         Element(const std::string& newVal);
 
-        double Value() const;
-        int IntValue() const;
-        double DoubleValue() const;
-        bool IsDouble() const;
-        void ChangeType();
-        void ChangeType(bool shouldBeDouble);
-        void Value(double newVal);
+        virtual double Value() const;
+        virtual int IntValue() const;
+        virtual double DoubleValue() const;
+        virtual bool IsDouble() const;
+        virtual void ChangeType();
+        virtual void ChangeType(bool shouldBeDouble);
+        virtual void Value(double newVal);
 
         bool operator==(Element const &right) const;
         bool operator!=(Element const &right) const;

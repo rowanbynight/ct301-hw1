@@ -31,7 +31,7 @@ Element::Element(const std::string& newVal) {
 }
 
 double Element::Value() const {
-    if (isDouble) {
+    if (this->isDouble) {
         return this->DoubleValue();
     }
     else {
