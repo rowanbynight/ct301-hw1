@@ -32,7 +32,7 @@ class Element {
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;
-        bool IsDouble() const;
+        virtual bool IsDouble() const;
         void ChangeType();
         void ChangeType(bool shouldBeDouble);
         void Value(double newVal);
@@ -47,6 +47,8 @@ class Element {
         friend Element operator%(const Element &left, const Element &right);
 
         Element Calculate(Element right, std::string operation) const;
+
+        virtual ~Element() = default;
 };
 
 #endif

@@ -25,9 +25,13 @@ class Operation: public Element {
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;
+        virtual bool IsDouble() const override;
         bool SetOperator(std::string newOperator);
 
+        Operation& operator=(Operation other);
         Element Calculate() const;
+
+        virtual ~Operation();
 };
 
 #endif

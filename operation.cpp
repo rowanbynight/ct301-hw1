@@ -7,6 +7,7 @@
 #include <fstream>
 #include "parsing_utils.h"
 #include "operation.h"
+#include <utility>
 
 
 Operation::Operation(const string& operationToken) {
@@ -66,10 +67,28 @@ double Operation::DoubleValue() const {
     return this->Calculate().DoubleValue();
 }
 
+bool Operation::IsDouble() const {
+    return left->IsDouble() || right->IsDouble();
+}
+
 bool Operation::SetOperator(std::string newOperator) {
     if (!token_is_operator(newOperator)) {
         return false;
     }
     this->operatorToken = newOperator;
     return true;
+}
+
+// There has to be a better way to do this, 
+// but i couldnt figure out how to implement it with the swap function
+Operation& Operation::operator=(Operation other) {
+    this->operatorToken = other.operatorToken;
+    this->left = other.left->Clone();
+    this->right = other.right->Clone();
+    return *this;
+}
+
+Operation::~Operation() {
+    delete left;
+    delete right;
 }

@@ -137,10 +137,27 @@ int run_tests() {
     o2.SetOperator("-");
     cout << o1.Calculate() << endl;                 // 9
     cout << o2.Calculate() << endl;                 // -2
+
+    Operation o3 = o1;
+    cout << o1.Calculate() << endl;                 // 9
+    cout << o3.Calculate() << endl;                 // 9
+    o3.SetOperator("*");
+    cout << o1.Calculate() << endl;                 // 9
+    cout << o3.Calculate() << endl;                 // 20
+
+    o1 = Operation("4 + 5");
+    o2 = Operation("4 + 5.1");
+    o3 = Operation("4.2 + 5.1");
+    cout << o1.IsDouble() << endl;
+    cout << o2.IsDouble() << endl;
+    cout << o3.IsDouble() << endl;
+    cout << o1.Calculate() << endl;
+    cout << o2.Calculate() << endl;
+    cout << o3.Calculate() << endl;
     return 0;
 }
 
-bool test = false;
+bool test = true;
 
 int main(int argc, char** argv) {
     if (test) {

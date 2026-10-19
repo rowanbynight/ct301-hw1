@@ -38,6 +38,7 @@ $(HWNUM).a: $(OBJ)
 # Running make clean should clean up any unnecessary components
 clean:
 	rm -f $(TARGET) *.o *.a *.tar
+	clear
 	@echo "Removed all object files."
 
 # Debug option "make debug". This enables the GNU Debugger "gdb"
