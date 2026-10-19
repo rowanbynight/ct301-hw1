@@ -8,12 +8,12 @@ GPPFlags = $(REQUIRED) -std=c++20
 Debug = -g
 
 # source and output names
-HWNUM = HW2
+HWNUM = HW3
 
 # Rename this to the name of your main file
-SRC = main.cpp element.cpp
+SRC = main.cpp element.cpp operation.cpp parsing_utils.cpp
 MAIN = main.cpp
-HEADER =  element.h
+HEADER =  element.h operation.h exceptions.h parsing_utils.h
 OBJ = element.o
 
 #Update this with your first and last name
@@ -26,7 +26,7 @@ TARGET = calculator
 
 # compile
 $(TARGET): $(HWNUM).a
-	$(GPP) $(GPPFlags) -o $(TARGET) $(MAIN) $<
+	$(GPP) $(GPPFlags) -o $(TARGET) $(SRC) $<
 
 %.o: %.cpp $(HEADER)
 	$(GPP) $(GPPFlags) -c $< -o $@

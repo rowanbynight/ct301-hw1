@@ -5,97 +5,12 @@
 #include <stdbool.h>
 #include <bits/stdc++.h>
 #include <fstream>
+#include "parsing_utils.h"
+#include "operation.h"
 using namespace std;
 
 
-// currently doesn't catch cases like "123.45aaaa"
-bool token_is_numeric(string token) {
-    try {
-        stod(token);
-        return true;
-    }
-    catch (invalid_argument &e) {
-        return false;
-    }
-}
-
-const string MLT_OPERATOR = "*";
-const string DIV_OPERATOR = "/";
-const string ADD_OPERATOR = "+";
-const string SUB_OPERATOR = "-";
-const string MOD_OPERATOR = "%";
-
-bool token_is_operator(string token) {
-    if (token.size() != 1) {
-        return false;
-    }
-    return (
-        token == MLT_OPERATOR ||
-        token == DIV_OPERATOR ||
-        token == ADD_OPERATOR ||
-        token == SUB_OPERATOR ||
-        token == MOD_OPERATOR
-    );
-}
-
-// Adapted from geeks for geeks article: https://www.geeksforgeeks.org/cpp/how-to-split-string-by-delimiter-in-cpp/
-void parse_line(string line, string &a, string &b, string &op) {
-    stringstream line_stream(line);
-    string token;
-    for (int i = 0; line_stream >> token; i++) {
-        if (i == 0) {
-            a = token;
-        }
-        if (i == 1) {
-            op = token;
-        }
-        if (i == 2) {
-            b = token;
-        }
-    }
-}
-
-void validate_operand_token(string token) {
-    if (token_is_numeric(token)) {
-        return;
-    }
-    throw InvalidElement("Operand invalid: " + token + " is not a number");
-}
-
-void validate_operator_token(string token) {
-    if (token.size() != 1) {
-        throw InvalidOperator("Operator invalid: " + token + " must be a single character");
-    }
-    if (!token_is_operator(token)) {
-        throw InvalidOperator("Operator invalid: " + token + " does not match any valid operators");
-    }
-}
-
-
-Element calculate(Element a, Element b, string operation) {
-    if (operation == MLT_OPERATOR) {
-        return a * b;
-    }
-    if (operation == DIV_OPERATOR) {
-        return a / b;
-    }
-    if (operation == ADD_OPERATOR) {
-        return a + b;
-    }
-    if (operation == SUB_OPERATOR) {
-        return a - b;
-    }
-    if (operation == MOD_OPERATOR) {
-        return a % b;
-    }
-    else {
-        throw invalid_argument("Invalid operation: " + operation + " not supported for double math");
-    }
-}
-
-
 // The run methods return their error codes
-
 int run_usage_mode() {
     cout << "Usage: Enter either a filename to parse "
         "or an equation to be parsed in the format of "
@@ -111,7 +26,7 @@ int run_terminal_mode(char** argv) {
         validate_operand_token(left);
         validate_operand_token(right);
         validate_operator_token(op);
-        cout << calculate(Element(left), Element(right), op) << endl;
+        cout << Element(left).Calculate(Element(right), op) << endl;
     }
     catch (InvalidElement &e) {
         cerr << e.what() << endl;
@@ -144,12 +59,12 @@ int run_file_mode(string filename) {
         if (next_line.size() == 0) {
             continue;
         }
-        parse_line(next_line, a, b, op);
+        ParseOperationToken(next_line, a, b, op);
         try {
             validate_operand_token(a);
             validate_operand_token(b);
             validate_operator_token(op);
-            cout << calculate(Element(a), Element(b), op) << endl;
+            cout << Element(a).Calculate(Element(b), op) << endl;
         }
         catch (exception &e) {
             cerr << "Error occured while calculating line " << i << endl;
@@ -190,10 +105,24 @@ int run_tests() {
     cout << 4.5 + Element(5) << endl;   // 9.5
     cout << Element(5.5) + 4 << endl;   // 9.5
     cout << 4 + Element(5.5) << endl;   // 9.5
+
+    Operation op(string("14 + 5"));
+    cout << op.Calculate() << endl;
+    op = Operation("4 * 5");
+    cout << op.Calculate() << endl;
+    op = Operation("42 % 5");
+    cout << op.Calculate() << endl;
+    op = Operation("4 / 0");
+    try {
+        cout << op.Calculate() << endl;
+    }
+    catch (domain_error& e) {
+        cout << e.what() << endl;
+    }
     return 0;
 }
 
-bool test = false;
+bool test = true;
 
 int main(int argc, char** argv) {
     if (test) {

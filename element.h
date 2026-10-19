@@ -30,10 +30,10 @@ class Element {
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;
-        virtual bool IsDouble() const;
-        virtual void ChangeType();
-        virtual void ChangeType(bool shouldBeDouble);
-        virtual void Value(double newVal);
+        bool IsDouble() const;
+        void ChangeType();
+        void ChangeType(bool shouldBeDouble);
+        void Value(double newVal);
 
         bool operator==(Element const &right) const;
         bool operator!=(Element const &right) const;
@@ -43,6 +43,8 @@ class Element {
         friend Element operator*(const Element &left, const Element &right);
         friend Element operator/(const Element &left, const Element &right);
         friend Element operator%(const Element &left, const Element &right);
+
+        Element Calculate(Element right, std::string operation) const;
 };
 
 #endif

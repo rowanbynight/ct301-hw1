@@ -6,18 +6,19 @@
 #include <stdbool.h>
 #include <bits/stdc++.h>
 #include <fstream>
+#include "parsing_utils.h"
 
 
 bool Element::TokenIsDouble(std::string const token) {
-        try {
-            [[maybe_unused]]
-            int as_int = stoi(token);
-            return token.find('.') != std::string::npos;
-        }
-        catch (std::invalid_argument& e) {
-            return true;
-        }
+    try {
+        [[maybe_unused]]
+        int as_int = stoi(token);
+        return token.find('.') != std::string::npos;
     }
+    catch (std::invalid_argument& e) {
+        return true;
+    }
+}
 
 Element::Element(const std::string& newVal) {
     // Partially adapted from code from https://www.geeksforgeeks.org/cpp/string-find-in-cpp/
@@ -123,4 +124,25 @@ Element operator%(const Element &left, const Element &right) {
         throw DivideByZeroError("Cannot perform modulo with respect to zero");
     }
     return Element(left.IntValue() % right.IntValue());
+}
+
+Element Element::Calculate(Element right, string operation) const {
+    if (operation == MLT_OPERATOR) {
+        return (*this) * right;
+    }
+    if (operation == DIV_OPERATOR) {
+        return (*this) / right;
+    }
+    if (operation == ADD_OPERATOR) {
+        return (*this) + right;
+    }
+    if (operation == SUB_OPERATOR) {
+        return (*this) - right;
+    }
+    if (operation == MOD_OPERATOR) {
+        return (*this) % right;
+    }
+    else {
+        throw invalid_argument("Invalid operation: " + operation + " not supported for double math");
+    }
 }

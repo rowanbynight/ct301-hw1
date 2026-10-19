@@ -1,28 +1,24 @@
-#include <element.h>
+#include "element.h"
+#include "parsing_utils.h"
+#include <string>
 
 
 #ifndef OPERATION_H
 #define OPERATION_H
 
 class Operation: public Element {
+    std::string operatorToken = ADD_OPERATOR;
+    Element* left = nullptr;
+    Element* right = nullptr;
+
     public:
-        const int ADD = 0;
-        const int SUB = 1;
-        const int MLT = 2;
-        const int DIV = 3;
-        const int MOD = 4;
+        Operation(const string& operationToken);
 
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;
-        virtual bool IsDouble() const;
-        virtual void ChangeType();
-        virtual void ChangeType(bool shouldBeDouble);
 
-    private:
-        int operator = 0;
-        Element* left = nullptr;
-        Element* right = nullptr;
-}
+        Element Calculate() const;
+};
 
 #endif
