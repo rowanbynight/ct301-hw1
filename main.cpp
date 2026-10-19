@@ -1,10 +1,10 @@
 #include "element.h"
 #include "exceptions.h"
-#include <iostream>
 #include <string>
 #include <stdbool.h>
 #include <bits/stdc++.h>
 #include <fstream>
+#include <iostream>
 #include "parsing_utils.h"
 #include "operation.h"
 using namespace std;
@@ -23,9 +23,9 @@ int run_terminal_mode(char** argv) {
     string op = argv[2];
     string right = argv[3];
     try {
-        validate_operand_token(left);
-        validate_operand_token(right);
-        validate_operator_token(op);
+        //validate_operand_token(left);
+        //validate_operand_token(right);
+        //validate_operator_token(op);
         cout << Element(left).Calculate(Element(right), op) << endl;
     }
     catch (InvalidElement &e) {
@@ -148,16 +148,20 @@ int run_tests() {
     o1 = Operation("4 + 5");
     o2 = Operation("4 + 5.1");
     o3 = Operation("4.2 + 5.1");
-    cout << o1.IsDouble() << endl;
-    cout << o2.IsDouble() << endl;
-    cout << o3.IsDouble() << endl;
-    cout << o1.Calculate() << endl;
-    cout << o2.Calculate() << endl;
-    cout << o3.Calculate() << endl;
+    cout << o1.IsDouble() << endl;                  // 0
+    cout << o2.IsDouble() << endl;                  // 1
+    cout << o3.IsDouble() << endl;                  // 1
+    cout << o1.Calculate() << endl;                 // 9
+    cout << o2.Calculate() << endl;                 // 9.1
+    cout << o3.Calculate() << endl;                 // 9.3
+
+    cout << o1 << endl;     // (4 + 5)
+    cout << o2 << endl;     // (4 + 5.1)
+    cout << o3 << endl;     // (4.2 + 5.1)
     return 0;
 }
 
-bool test = true;
+bool test = false;
 
 int main(int argc, char** argv) {
     if (test) {

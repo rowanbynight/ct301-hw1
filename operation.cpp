@@ -6,6 +6,7 @@
 #include <bits/stdc++.h>
 #include <fstream>
 #include "parsing_utils.h"
+#include <ostream>
 #include "operation.h"
 #include <utility>
 
@@ -86,6 +87,14 @@ Operation& Operation::operator=(Operation other) {
     this->left = other.left->Clone();
     this->right = other.right->Clone();
     return *this;
+}
+
+
+std::ostream& operator<<(std::ostream& out, const Operation& operation) {
+    return 
+        out << "(" << *(operation.left) << 
+        " " << operation.operatorToken <<
+        " " << *(operation.right) << ")";
 }
 
 Operation::~Operation() {

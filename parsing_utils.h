@@ -1,11 +1,3 @@
-#include "element.h"
-#include "exceptions.h"
-#include <iostream>
-#include <string>
-#include <stdbool.h>
-#include <bits/stdc++.h>
-#include <fstream>
-
 #ifndef PARSING_UTILS_H
 #define PARSING_UTILS_H
 

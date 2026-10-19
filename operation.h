@@ -1,5 +1,7 @@
+
 #include "element.h"
 #include "parsing_utils.h"
+#include <ostream>
 #include <string>
 
 
@@ -29,6 +31,7 @@ class Operation: public Element {
         bool SetOperator(std::string newOperator);
 
         Operation& operator=(Operation other);
+        friend std::ostream& operator<<(std::ostream& out, const Operation& operation);
         Element Calculate() const;
 
         virtual ~Operation();

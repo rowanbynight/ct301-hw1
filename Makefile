@@ -26,7 +26,7 @@ TARGET = calculator
 
 # compile
 $(TARGET): $(HWNUM).a
-	$(GPP) $(GPPFlags) -o $(TARGET) $(SRC) $<
+	$(GPP) $(GPPFlags) -o $(TARGET) $(MAIN) $<
 
 %.o: %.cpp $(HEADER)
 	$(GPP) $(GPPFlags) -c $< -o $@
