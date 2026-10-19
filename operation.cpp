@@ -22,10 +22,27 @@ Operation::Operation(const string& operationToken) {
     this->right = new Element(rightToken);
 }
 
-Operation::Operation(const Element& left, char operator, const Element& right) {
-    this->operatorToken = operator;
-    this->left = left.Clone();
-    this->right = right.Clone();
+Operation::Operation(const Element& left, char op, const Element& right) {
+    this->operatorToken = op;
+    this->left = new Element(left);
+    this->right = new Element(right);
+}
+
+Operation::Operation(const Element& left, std::string op, const Element& right) {
+    this->operatorToken = op;
+    this->left = new Element(left);
+    this->right = new Element(right);
+}
+
+Operation::Operation(const Operation& original): Element() {
+    this->operatorToken = original.operatorToken;
+    this->left = original.left->Clone();
+    this->right = original.right->Clone();
+}
+
+Element* Operation::Clone() const {
+    Element* newOperation = new Operation(*this);
+    return newOperation;
 }
 
 Element Operation::Calculate() const {
@@ -47,4 +64,12 @@ int Operation::IntValue() const {
 
 double Operation::DoubleValue() const {
     return this->Calculate().DoubleValue();
+}
+
+bool Operation::SetOperator(std::string newOperator) {
+    if (!token_is_operator(newOperator)) {
+        return false;
+    }
+    this->operatorToken = newOperator;
+    return true;
 }

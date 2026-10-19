@@ -14,9 +14,18 @@ class Operation: public Element {
     public:
         Operation(const string& operationToken);
 
+        Operation(const Element& left, char op, const Element& right);
+
+        Operation(const Element& left, std::string op, const Element& right);
+
+        Operation(const Operation& original);
+
+        virtual Element* Clone() const override; 
+
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;
+        bool SetOperator(std::string newOperator);
 
         Element Calculate() const;
 };

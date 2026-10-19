@@ -27,6 +27,8 @@ class Element {
 
         Element(const std::string& newVal);
 
+        virtual Element* Clone() const;
+
         virtual double Value() const;
         virtual int IntValue() const;
         virtual double DoubleValue() const;

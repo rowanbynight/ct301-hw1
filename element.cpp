@@ -31,6 +31,13 @@ Element::Element(const std::string& newVal) {
     }
 }
 
+Element* Element::Clone() const {
+    Element* newElement = new Element();
+    newElement->Value(this->DoubleValue());
+    newElement->ChangeType(this->IsDouble());
+    return newElement;
+}
+
 double Element::Value() const {
     if (this->isDouble) {
         return this->DoubleValue();

@@ -106,23 +106,41 @@ int run_tests() {
     cout << Element(5.5) + 4 << endl;   // 9.5
     cout << 4 + Element(5.5) << endl;   // 9.5
 
-    Operation op(string("14 + 5"));
-    cout << op.Calculate() << endl;
-    op = Operation("4 * 5");
-    cout << op.Calculate() << endl;
-    op = Operation("42 % 5");
-    cout << op.Calculate() << endl;
-    op = Operation("4 / 0");
+    Operation* op = new Operation(string("14 + 5"));
+    cout << op->Calculate() << endl;
+    op = new Operation("4 * 5");
+    cout << op->Calculate() << endl;
+    op = new Operation("42 % 5");
+    cout << op->Calculate() << endl;
+    op = new Operation("4 / 0");
     try {
-        cout << op.Calculate() << endl;
+        cout << op->Calculate() << endl;
     }
     catch (domain_error& e) {
         cout << e.what() << endl;
     }
+
+    Element e1 = *(new Element(4));
+    Element e2 = *(new Element(5));
+    Element e3 = *(e2.Clone());
+    cout << e1 * e2 << endl;        // 20
+    cout << e1 * e3 << endl;        // 20
+    e3.Value(6);
+    cout << e1 * e2 << endl;        // 20
+    cout << e1 * e3 << endl;        // 24
+    
+    Operation o1 = *(new Operation(e1, "*", e2));
+    Operation o2 = *(new Operation(e1, "*", e3));
+    cout << o1.Calculate() << endl;                 // 20
+    cout << o2.Calculate() << endl;                 // 24
+    o1.SetOperator("+");
+    o2.SetOperator("-");
+    cout << o1.Calculate() << endl;                 // 9
+    cout << o2.Calculate() << endl;                 // -2
     return 0;
 }
 
-bool test = true;
+bool test = false;
 
 int main(int argc, char** argv) {
     if (test) {
